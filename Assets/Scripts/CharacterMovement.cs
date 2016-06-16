@@ -6,6 +6,8 @@ public class CharacterMovement: MonoBehaviour {
 	public float speed = 6.0F;
   public float jumpSpeed = 8.0F;
   public float gravity = 20.0F;
+	public float mouseXSensitivity = 32.0F;
+	public float mouseYSensitivity = 32.0F;
   private Vector3 moveDirection = Vector3.zero;
 	private bool isGrounded = false;
   void Update() {
@@ -19,9 +21,14 @@ public class CharacterMovement: MonoBehaviour {
     } else {
 			moveDirection.x = Input.GetAxis("Horizontal") * speed;
 			moveDirection.z = Input.GetAxis("Vertical") * speed;
+			moveDirection = transform.TransformDirection(moveDirection);
 		}
     moveDirection.y -= gravity * Time.deltaTime;
     controller.Move(moveDirection * Time.deltaTime);
+
+		Debug.Log(moveDirection);
+		transform.Rotate(0, Time.deltaTime * Input.GetAxis("Mouse X") * mouseXSensitivity, 0);
+
   }
 
 	void OnControllerColliderHit(ControllerColliderHit hit) {
@@ -31,10 +38,6 @@ public class CharacterMovement: MonoBehaviour {
 			isGrounded = true;
 		} else {
 			isGrounded = false;
-			Debug.Log("Normal vector we collided at: " + hit.normal);
-			moveDirection.x = hit.normal.x * -1 * speed;
-			moveDirection.y = hit.normal.y * -1 * speed;
-			moveDirection.z = hit.normal.z * -1 * speed;
 		}
 	}
 }
