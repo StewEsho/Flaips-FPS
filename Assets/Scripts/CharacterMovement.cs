@@ -15,8 +15,10 @@ public class CharacterMovement: MonoBehaviour {
       moveDirection *= speed;
       if (Input.GetButton("Jump"))
         moveDirection.y = jumpSpeed;
-
-    }
+    } else {
+			moveDirection.x = Input.GetAxis("Horizontal") * speed;
+			moveDirection.z = Input.GetAxis("Vertical") * speed;
+		}
     moveDirection.y -= gravity * Time.deltaTime;
     controller.Move(moveDirection * Time.deltaTime);
   }
