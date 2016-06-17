@@ -7,9 +7,10 @@ public class CharacterMovement: MonoBehaviour {
   public float jumpSpeed = 8.0F;
   public float gravity = 20.0F;
 	public float mouseXSensitivity = 32.0F;
-	public float mouseYSensitivity = 32.0F;
   private Vector3 moveDirection = Vector3.zero;
 	private bool isGrounded = false;
+	private bool wasLocked = false;
+
   void Update() {
     CharacterController controller = GetComponent<CharacterController>();
     if (controller.isGrounded && isGrounded) {
@@ -26,9 +27,10 @@ public class CharacterMovement: MonoBehaviour {
     moveDirection.y -= gravity * Time.deltaTime;
     controller.Move(moveDirection * Time.deltaTime);
 
-		Debug.Log(moveDirection);
-		transform.Rotate(0, Time.deltaTime * Input.GetAxis("Mouse X") * mouseXSensitivity, 0);
+		transform.Rotate(0, Time.deltaTime * Input.GetAxis("Mouse X") * mouseXSensitivity, 0, Space.World);
 
+		if (Input.GetKeyDown("escape"))
+      Screen.lockCursor = false;
   }
 
 	void OnControllerColliderHit(ControllerColliderHit hit) {
@@ -40,4 +42,9 @@ public class CharacterMovement: MonoBehaviour {
 			isGrounded = false;
 		}
 	}
+
+	void OnMouseDown() {
+    Screen.lockCursor = true;
+  }
+
 }
