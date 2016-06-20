@@ -11,7 +11,13 @@ public class CharacterMovement: MonoBehaviour {
 	private bool isGrounded = false;
 	private bool wasLocked = false;
 
+	void Awake() {
+		Screen.lockCursor = true;
+		Screen.showCursor = false;
+	}
+
   void Update() {
+
     CharacterController controller = GetComponent<CharacterController>();
     if (controller.isGrounded && isGrounded) {
       moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -29,8 +35,10 @@ public class CharacterMovement: MonoBehaviour {
 
 		transform.Rotate(0, Time.deltaTime * Input.GetAxis("Mouse X") * mouseXSensitivity, 0, Space.World);
 
-		if (Input.GetKeyDown("escape"))
-      Screen.lockCursor = false;
+		if (Input.GetKeyDown("escape")){
+			Screen.lockCursor = !Screen.lockCursor;
+			Screen.showCursor = !Screen.showCursor;
+		}
   }
 
 	void OnControllerColliderHit(ControllerColliderHit hit) {
@@ -44,7 +52,6 @@ public class CharacterMovement: MonoBehaviour {
 	}
 
 	void OnMouseDown() {
-    Screen.lockCursor = true;
   }
 
 }
