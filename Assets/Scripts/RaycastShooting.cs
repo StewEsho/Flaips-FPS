@@ -9,7 +9,10 @@ public class RaycastShooting : MonoBehaviour {
 			Ray bulletRay = new Ray(transform.position, transform.forward);
 			if(Physics.Raycast(bulletRay, out hit)){
 				Debug.Log(hit.collider.tag);
-				Debug.DrawLine (transform.position, hit.point, Color.cyan);
+				Debug.DrawLine (transform.position, hit.point, Color.red);
+				if(hit.collider.tag == "Enemy"){
+					hit.collider.gameObject.SetActive(false);
+				}
 			}
 		}
 	}
