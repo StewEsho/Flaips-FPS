@@ -9,7 +9,6 @@ public class CharacterMovement: MonoBehaviour {
 	public float mouseXSensitivity = 32.0F;
   private Vector3 moveDirection = Vector3.zero;
 	private bool isGrounded = false;
-	private bool wasLocked = false;
 
 	void Awake() {
 		Screen.lockCursor = true;

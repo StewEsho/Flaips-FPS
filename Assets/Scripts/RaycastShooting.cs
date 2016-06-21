@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class RaycastShooting : MonoBehaviour {
+
 	void Update(){
 		if(Input.GetButtonDown("Fire1")){
 			RaycastHit hit;
