@@ -12,6 +12,7 @@ public class RaycastShooting : MonoBehaviour {
 				Debug.DrawLine (transform.position, hit.point, Color.red);
 				if(hit.collider.tag == "Enemy"){
 					hit.collider.gameObject.SetActive(false);
+					Debug.Log("Deadzo!");
 				}
 			}
 		}
