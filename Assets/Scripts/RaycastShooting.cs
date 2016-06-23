@@ -6,6 +6,7 @@ public class RaycastShooting : MonoBehaviour {
 	public int bulletDamage = 20;
 	public float timeBetweenBullets = 0.15f;
 	public float bulletRange = 200f;
+	public Camera cam;
 
 	Ray bulletRay;
 	RaycastHit bulletHit;
@@ -41,7 +42,7 @@ public class RaycastShooting : MonoBehaviour {
 		gunLine.enabled = true;
 		gunLine.SetPosition(0, transform.position);
 
-		bulletRay = new Ray(transform.position, transform.forward);
+		bulletRay = cam.ScreenPointToRay(new Vector3(cam.pixelWidth/2, cam.pixelHeight/2, 0));
 
 		if(Physics.Raycast(bulletRay, out bulletHit, bulletRange, shootableMask)){
 			GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
