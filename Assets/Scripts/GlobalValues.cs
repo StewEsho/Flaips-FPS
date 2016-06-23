@@ -2,14 +2,6 @@
 using System.Collections;
 
 public class GlobalValues : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	public static int ammoCount = 6;
+	public static int playerHealth = 100;
 }
