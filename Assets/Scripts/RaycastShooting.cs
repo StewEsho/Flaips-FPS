@@ -6,30 +6,33 @@ public class RaycastShooting : MonoBehaviour {
 	public int bulletDamage = 20;
 	public float timeBetweenBullets = 0.01f;
 	public float bulletRange = 200f;
+	public int ammoCount = 6;
 	public Camera cam;
-	public GUIText ammoCount;
+	public GUIText ammoCountText;
 
 	Ray bulletRay;
 	RaycastHit bulletHit;
 	int shootableMask;
 	LineRenderer gunLine;
-	float effectsDisplayTime = 0.15f;
+	float effectsDisplayTime = 0.35f;
 	float timer;
 	AudioSource[] aSources;
+	int maxAmmo;
 
 	void Awake(){
+		maxAmmo = ammoCount;
 		shootableMask = 8;
 		gunLine = transform.GetChild(0).gameObject.GetComponent<LineRenderer>();
-		ammoCount.text = GlobalValues.ammoCount.ToString();
+		ammoCountText.text = ammoCount.ToString();
 		aSources = GetComponents<AudioSource>();
 	}
 
 	void Update(){
 		timer += Time.deltaTime;
 
-		ammoCount.text = GlobalValues.ammoCount.ToString();
+		ammoCountText.text = ammoCount.ToString();
 
-		if(Input.GetButtonDown("Fire1")){
+		if(Input.GetButtonDown("Fire1") && timer > timeBetweenBullets){
 			Shoot();
 		}
 
@@ -48,8 +51,8 @@ public class RaycastShooting : MonoBehaviour {
 
 	void Shoot(){
 		timer = 0.0F;
-		if(GlobalValues.ammoCount > 0){
-			GlobalValues.ammoCount -= 1;
+		if(ammoCount > 0){
+			ammoCount -= 1;
 
 			transform.GetChild(0).GetComponent<AudioSource>().Stop();
 			transform.GetChild(0).GetComponent<AudioSource>().Play();
@@ -77,11 +80,13 @@ public class RaycastShooting : MonoBehaviour {
 	}
 
 	void Reload(){
-		if(GlobalValues.ammoCount < 6){
-			timer = 0.0F;
-			GlobalValues.ammoCount = 6;
+		if(ammoCount < maxAmmo){
+			timer = (timeBetweenBullets-0.5f);
+			ammoCount = maxAmmo;
 			aSources[1].Stop();
 			aSources[1].Play();
+			transform.GetChild(0).animation.Stop("Reload");
+			transform.GetChild(0).animation.Play("Reload");
 		}
 	}
 }
