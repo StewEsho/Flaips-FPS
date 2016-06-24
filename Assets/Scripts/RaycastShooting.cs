@@ -67,7 +67,7 @@ public class RaycastShooting : MonoBehaviour {
 
 			if(Physics.Raycast(bulletRay, out bulletHit, bulletRange)){
 				if(bulletHit.collider.tag == "Enemy"){
-					bulletHit.collider.gameObject.SetActive(false);
+					bulletHit.collider.GetComponent<AINav>().Damage(bulletDamage);
 				}
 				gunLine.SetPosition(1, bulletHit.point);
 			} else {

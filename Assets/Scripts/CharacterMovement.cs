@@ -7,15 +7,23 @@ public class CharacterMovement: MonoBehaviour {
   public float jumpSpeed = 8.0F;
   public float gravity = 20.0F;
 	public float mouseXSensitivity = 32.0F;
+	public int maxHealth = 100;
+
   private Vector3 moveDirection = Vector3.zero;
 	private bool isGrounded = false;
+	int playerHealth;
 
 	void Awake() {
 		Screen.lockCursor = true;
 		Screen.showCursor = false;
+		playerHealth = maxHealth;
 	}
 
   void Update() {
+
+		if(playerHealth <= 0){
+			GlobalValues.isPlayerDead = true;
+		}
 
     CharacterController controller = GetComponent<CharacterController>();
     if (controller.isGrounded && isGrounded) {
@@ -50,7 +58,8 @@ public class CharacterMovement: MonoBehaviour {
 		}
 	}
 
-	void OnMouseDown() {
-  }
+	public void Damage(int _damage){
+		playerHealth -= _damage;
+	}
 
 }
