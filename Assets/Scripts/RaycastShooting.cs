@@ -9,6 +9,7 @@ public class RaycastShooting : MonoBehaviour {
 	public int ammoCount = 6;
 	public Camera cam;
 	public GUIText ammoCountText;
+	public GUIText scoreText;
 
 	Ray bulletRay;
 	RaycastHit bulletHit;
@@ -24,6 +25,7 @@ public class RaycastShooting : MonoBehaviour {
 		shootableMask = 8;
 		gunLine = transform.GetChild(0).gameObject.GetComponent<LineRenderer>();
 		ammoCountText.text = ammoCount.ToString();
+		scoreText.text = GlobalValues.score.ToString();
 		aSources = GetComponents<AudioSource>();
 	}
 
@@ -31,6 +33,7 @@ public class RaycastShooting : MonoBehaviour {
 		timer += Time.deltaTime;
 
 		ammoCountText.text = ammoCount.ToString();
+		scoreText.text = GlobalValues.score.ToString();
 
 		if(Input.GetButtonDown("Fire1") && timer > timeBetweenBullets){
 			Shoot();
