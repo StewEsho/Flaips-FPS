@@ -22,10 +22,28 @@ public class AINav : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		// agent.SetDestination(target.position);
+		agent.SetDestination(target.position);
 
 		if(isDead)
-			gameObject.SetActiveRecursively(false);
+			Respawn();
+	}
+
+	public void Respawn(){
+		Vector3 newSpawnpoint = new Vector3(0,0,0);
+		do{
+			newSpawnpoint = Random.insideUnitCircle * 8;
+			newSpawnpoint.z = newSpawnpoint.y;
+			newSpawnpoint -= transform.position;
+			newSpawnpoint.y = 6;
+			Debug.Log(newSpawnpoint);
+			if((GameObject.FindWithTag("Player").transform.position - newSpawnpoint).sqrMagnitude < 0.5){
+				Debug.Log("TOO CLOSE!");
+			}
+		}while((GameObject.FindWithTag("Player").transform.position - newSpawnpoint).sqrMagnitude < 0.5);
+		isDead = false;
+		playerHealth = maxHealth;
+		transform.position = newSpawnpoint;
+		GlobalValues.score += 1;
 	}
 
 	public void Damage(int _damage){
